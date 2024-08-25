@@ -1,22 +1,21 @@
 tasks:
   - before: |
-      export DFX_VERSION=0.18.0
-      export POCKET_IC_PYTHON_VERSION=2.1.0
-      export POCKET_IC_SERVER_VERSION=3.0.1
-      export DFXVM_INIT_YES=true
-      export PATH="$HOME/bin:$PATH"
-      echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
-      sudo apt-get install -q -y libunwind-dev
+      # installs nvm (Node Version Manager)
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
+      # download and install Node.js (you may need to restart the terminal)
+      nvm install 20
+
+      # verifies the right Node.js version is in the environment
+      node -v # should print `v20.17.0`
+
+      # verifies the right npm version is in the environment
+      npm -v # should print `10.8.2`
+
       sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
-      source "$HOME/.local/share/dfx/env" 
-      curl -Ls https://github.com/dfinity/pocketic/releases/download/${POCKET_IC_SERVER_VERSION}/pocket-ic-x86_64-linux.gz -o pocket-ic.gz
-      gzip -d pocket-ic.gz
-      chmod +x pocket-ic
-      pip3 install pocket-ic==${POCKET_IC_PYTHON_VERSION}
-      export DFX_VERSION=
-      npm install &
+
       dfx start --background --clean
-      open README.md
+
 
 vscode:
   extensions:
